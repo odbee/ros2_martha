@@ -1,0 +1,9 @@
+<library path="igus_axis_driver">
+  <class name="igus_axis_driver/RRBotSystemPositionOnlyHardware"
+         type="igus_axis_driver::RRBotSystemPositionOnlyHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      The ros2_control RRbot example using a system hardware interface-type.
+    </description>
+  </class>
+</library>
