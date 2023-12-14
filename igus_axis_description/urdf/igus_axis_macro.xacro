@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="rrbot" params="axisparent prefix axisend_link *origin">
+
+  <!-- Constants for robot dimensions -->
+  <xacro:property name="mass" value="1" /> <!-- arbitrary value for mass -->
+  <xacro:property name="width1x" value="0.2" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="width1y" value="0.6" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="width2x" value="0.2" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="width2y" value="0.05" /> <!-- Square dimensions (widthxwidth) of beams -->
+  <xacro:property name="width" value="0.2" /> <!-- Square dimensions (widthxwidth) of beams -->
+
+  <xacro:property name="height1" value="2.5" /> <!-- Link 1 -->
+  <xacro:property name="height2" value=".4" /> <!-- Link 2 -->
+  <xacro:property name="height3" value=".8" /> <!-- Link 3-->
+
+  <xacro:property name="axel_offset" value="${width1y/2}" /> <!-- Space btw top of beam and the each joint -->
+
+  <joint name="${prefix}base_joint" type="fixed">
+    <xacro:insert_block name="origin" />
+    <parent link="${axisparent}"/>
+    <child link="${prefix}base_link" />
+  </joint>
+
+  <!-- Base Link -->
+  <link name="${prefix}base_link">
+    <collision>
+      <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${width1x} ${width1y} ${height1}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
+      <geometry>
+        <box size="${width1x} ${width1y} ${height1}"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 ${height1/2}" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${mass / 12.0 * (width1x*width1y + height1*height1)}" ixy="0.0" ixz="0.0"
+        iyy="${mass / 12.0 * (height1*height1 + width1x*width1y)}" iyz="0.0"
+        izz="${mass / 12.0 * (width1x*width1y + width1x*width1y)}"/>
+    </inertial>
+  </link>
+
+  <joint name="${prefix}joint1" type="prismatic">
+    <parent link="${prefix}base_link"/>
+    <child link="${prefix}link1"/>
+    <origin xyz="0 ${width1y/2} ${height2/2}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.7"/>
+    <limit lower="0" upper="2" velocity="100" effort="100"/> 
+
+  </joint>
+
+  <!-- Middle Link -->
+  <link name="${prefix}link1">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${width2x} ${width2y} ${height2}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${width2x} ${width2y} ${height2}"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${mass / 12.0 * (width2x*width2y + height2*height2)}" ixy="0.0" ixz="0.0"
+        iyy="${mass / 12.0 * (height2*height2 + width2x*width2y)}" iyz="0.0"
+        izz="${mass / 12.0 * (width2x*width2y + width2x*width2y)}"/>
+    </inertial>
+  </link>
+
+
+  <joint name="${prefix}finaljoint" type="fixed">
+    <parent link="${prefix}link1"/>
+    <child link="${prefix}${axisend_link}"/>
+    <origin xyz="0 ${width1y/2} ${height2/2}" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <dynamics damping="0.7"/>
+    <limit lower="0" upper="2" velocity="100" effort="100"/> 
+
+  </joint>
+
+  <!-- Middle Link -->
+  <link name="${prefix}${axisend_link}">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${width2x} ${width2y} ${height2}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${width2x} ${width2y} ${height2}"/>
+      </geometry>
+      <material name="yellow"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${mass / 12.0 * (width2x*width2y + height2*height2)}" ixy="0.0" ixz="0.0"
+        iyy="${mass / 12.0 * (height2*height2 + width2x*width2y)}" iyz="0.0"
+        izz="${mass / 12.0 * (width2x*width2y + width2x*width2y)}"/>
+    </inertial>
+  </link>
+
+  </xacro:macro>
+</robot>

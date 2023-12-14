@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="2dof_robot">
+
+
+
+<!-- <link name="world" /> -->
+<link name="base_link"/>
+<xacro:arg name="axisparent" default="base_link" />
+<xacro:arg name="axisend_link" default="end_link" />
+
+<xacro:arg name="prefix" default="axis_" />
+
+
+
+<!-- <link name="base_link"/> -->
+<xacro:arg name="parent" default="axis_end_link" />
+<xacro:arg name="tf_prefix" default="UR_" />
+<xacro:arg name="name" default="x" />
+
+<xacro:include filename="$(find igus_axis_description)/urdf/igus_axis_description.urdf.xacro" />
+
+<xacro:include filename="$(find ur10e_description)/urdf/ur_description.urdf.xacro" />
+
+</robot>
