@@ -13,12 +13,29 @@
 # limitations under the License.
 
 from launch import LaunchDescription
-from launch.substitutions import PathJoinSubstitution
+from launch.actions import DeclareLaunchArgument, RegisterEventHandler
+from launch.conditions import IfCondition
+from launch.event_handlers import OnProcessExit
+from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
+
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-
+import launch_ros
+import os
+from ament_index_python.packages import get_package_share_directory
 
 def generate_launch_description():
+    declared_arguments = []
+
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "prefix",
+            default_value="axis_",
+            description="Prefix of the joint names, useful for \
+        multi-robot setup. If changed than also joint names in the controllers' configuration \
+        have to be updated.",
+        )
+    )
 
     position_goals = PathJoinSubstitution(
         [
@@ -27,9 +44,13 @@ def generate_launch_description():
             "rrbot_singleAxis_joint_trajectory_publisher.yaml",
         ]
     )
+    prefix="axis_"
+    position_goals=                launch_ros.parameter_descriptions.ParameterFile(
+                    param_file=os.path.join(get_package_share_directory('igus_axis_driver'), 'config', 'rrbot_singleAxis_joint_trajectory_publisher_subst.yaml')
+,
+                    allow_substs=True)
 
-    return LaunchDescription(
-        [
+    return LaunchDescription(declared_arguments +         [
             Node(
                 package="ros2_controllers_test_nodes",
                 executable="publisher_joint_trajectory_controller",
@@ -37,5 +58,4 @@ def generate_launch_description():
                 parameters=[position_goals],
                 output="both",
             )
-        ]
-    )
+        ])

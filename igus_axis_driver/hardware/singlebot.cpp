@@ -71,6 +71,8 @@ RRBotSystemPositionOnlyHardware::export_state_interfaces()
 
     state_interfaces.emplace_back(hardware_interface::StateInterface(
     axisName, hardware_interface::HW_IF_POSITION, &pos));
+    state_interfaces.emplace_back(hardware_interface::StateInterface(
+    axisName, hardware_interface::HW_IF_VELOCITY, &setvel));
 
 
   return state_interfaces;
@@ -80,6 +82,10 @@ std::vector<hardware_interface::CommandInterface>
 RRBotSystemPositionOnlyHardware::export_command_interfaces()
 {
   std::vector<hardware_interface::CommandInterface> command_interfaces;
+    command_interfaces.emplace_back(hardware_interface::CommandInterface(
+    axisName, hardware_interface::HW_IF_VELOCITY, &setvel));
+
+
     command_interfaces.emplace_back(hardware_interface::CommandInterface(
     axisName, hardware_interface::HW_IF_POSITION, &pos));
 
@@ -128,6 +134,8 @@ hardware_interface::return_type RRBotSystemPositionOnlyHardware::read(
 {
 
   pos=xAxis.getCurrentPosInMM()/1000;
+  setvel=xAxis.getCurrentVelInMMS()/1000; // ROS Units are meters
+
   std::cout << "position in meters" << pos << std::endl;
 
   return hardware_interface::return_type::OK;
@@ -137,8 +145,10 @@ hardware_interface::return_type RRBotSystemPositionOnlyHardware::write(
   const rclcpp::Time & /*time*/, const rclcpp::Duration & /*period*/)
 {
   // xAxis.profilePositionAbs(pos*1000, setvel, acc, dec);
-  xAxis.profilePositionAbs_Async(pos*1000, setvel, acc, dec);
+  // xAxis.profilePositionAbs_Async(pos*1000, setvel, acc, dec);
+    std::cout << "sending veocity command:" << setvel*1000 << std::endl;
 
+  xAxis.profileVelocity(setvel*1000,acc);
   return hardware_interface::return_type::OK;
 }
 

@@ -51,10 +51,16 @@ install(
   DESTINATION include/igus_axis_driver
 )
 
-# install(
-#   DIRECTORY bringup/launch bringup/config
-#   DESTINATION share/igus_axis_driver
-# )
+install(
+  DIRECTORY  rviz 
+  DESTINATION share/${PROJECT_NAME}
+)
+
+
+install(
+  DIRECTORY bringup/launch bringup/config
+  DESTINATION share/igus_axis_driver
+)
 install(TARGETS igus_axis_driver
   EXPORT export_igus_axis_driver
   ARCHIVE DESTINATION lib

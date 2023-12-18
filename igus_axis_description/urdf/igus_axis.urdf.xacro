@@ -8,7 +8,7 @@ https://github.com/ros-simulation/gazebo_ros_demos/blob/kinetic-devel/rrbot_desc
   <!-- Used for fixing robot -->
 <link name="base_link"/>
 <xacro:arg name="axisparent" default="base_link" />
-<xacro:arg name="prefix" default="axis_" />
+<xacro:arg name="prefix" default="" />
 <xacro:arg name="axisend_link" default="end_link" />
 
 

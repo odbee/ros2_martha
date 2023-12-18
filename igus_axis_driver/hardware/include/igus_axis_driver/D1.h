@@ -149,7 +149,7 @@ using namespace std;
 		void profilePositionAbs(float position, float velo, float accel, float decel=0); // Function "Profile Position Mode"; Move to an absolute position with given velocity, acceleration and deceleration
 		void profilePositionAbs_Async(float position, float velo, float accel, float decel=0); // Function "Profile Position Mode"; Move to an absolute position with given velocity, acceleration and deceleration
 		float getCurrentPosInMM();
-
+		float getCurrentVelInMMS();
 		void profilePositionRel(float position, float velo, float accel, float decel=0); // Function "Profile Position Mode"; Move to an relative position with given velocity, acceleration and deceleration
 		void profileVelocity(float velo, float accel, float decel=0); // Function "Profile Position Mode"; Move with a set target velocity, acceleration and deceleration; Movement starts directly when the target velocity is not 0
 		int readObjectValue(char objectindex1, char objectindex2, int subindex = 0); // Function that reads the value of a given object and returns its value

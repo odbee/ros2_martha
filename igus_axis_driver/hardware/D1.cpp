@@ -781,3 +781,14 @@ float D1::getCurrentPosInMM()
 	return cpos;
 
 }
+
+
+float D1::getCurrentVelInMMS()
+{
+	float cpos=readObjectValue(0x60, 0x6C, 0);
+	float siFactor = getSIUnitFactor();
+
+	cpos=cpos/siFactor;
+	return cpos;
+
+}

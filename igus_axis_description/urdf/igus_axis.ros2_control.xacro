@@ -10,7 +10,7 @@
         <param name="example_param_hw_stop_duration_sec">3.0</param>
         <param name="example_param_hw_slowdown">100</param>
         <param name="ip">192.168.0.10</param>
-        <param name="axisName">joint1</param>
+        <param name="axisName">${prefix}joint1</param>
         <param name="port">502</param>
         <param name="acc">200</param>
         <param name="dec">200</param>
