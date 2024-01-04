@@ -1,0 +1,45 @@
+
+# publisher_joint_trajectory_controller:
+#   ros__parameters:
+
+#     controller_name: "axis_joint_trajectory_controller"
+
+#     wait_sec_between_publish: 5
+
+#     goal_names: ["pos1", "pos2", "pos3", "pos4"]
+#     pos1:
+#       positions: [0.6]
+#     pos2:
+#       positions: [0.2]
+#     pos3:
+#       positions: [0.5]
+#     pos4:
+#       positions: [0.4]
+
+
+#     joints:
+#       - axis_joint1
+
+
+#     check_starting_point: false
+#     starting_point_limits:
+#       axis_joint1: [-0.1,0.1]
+
+
+publisher_joint_trajectory_controller:
+  ros__parameters:
+
+    controller_name: "axis_joint_trajectory_controller"
+    wait_sec_between_publish: 5
+
+    goal_names: ["pos1", "pos2", "pos3", "pos4"]
+    pos1: [0.6]
+    pos2: [0.2]
+    pos3: [0.5]
+    pos4: [0.4]
+
+    joints:
+      - axis_joint1
+
+
+

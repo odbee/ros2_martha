@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="2dof_robot">
+
+<link name="world" /> 
+
+
+<xacro:arg name="parent" default="world" />
+<xacro:arg name="tf_prefix" default="" />
+
+<xacro:include filename="$(find ur10e_description)/urdf/ur_description.urdf.xacro" />
+
+</robot>

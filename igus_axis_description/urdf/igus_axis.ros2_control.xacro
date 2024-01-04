@@ -19,11 +19,13 @@
       </hardware>
 
       <joint name="${prefix}joint1">
-        <command_interface name="position">
+        <command_interface name="velocity">
           <param name="min">0</param>
           <param name="max">2</param>
         </command_interface>
         <state_interface name="position"/>
+        <state_interface name="velocity"/>
+
       </joint>
       <!-- <joint name="${prefix}joint2">
         <command_interface name="position">

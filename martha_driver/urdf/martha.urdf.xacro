@@ -13,13 +13,25 @@
 
 
 
+<joint name="connector" type="fixed">
+    <parent link="$(arg prefix)end_link" />
+    <child link="basething" />
+    <origin xyz="0 0 0" rpy="${-0.5*pi} ${0.25*pi} 0"/>
+</joint>
+
+<link name="basething">
+
+    </link>
+
 <!-- <link name="base_link"/> -->
-<xacro:arg name="parent" default="axis_end_link" />
+<xacro:arg name="parent" default="basething" />
 <xacro:arg name="tf_prefix" default="UR_" />
 <xacro:arg name="name" default="x" />
 
+
+
 <xacro:include filename="$(find igus_axis_description)/urdf/igus_axis_description.urdf.xacro" />
 
-<xacro:include filename="$(find ur10e_description)/urdf/ur_description.urdf.xacro" />
+<!-- <xacro:include filename="$(find ur10e_description)/urdf/ur_description.urdf.xacro" /> -->
 
 </robot>

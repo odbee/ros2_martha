@@ -2,7 +2,14 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="2dof_robot">
 
-<!-- <link name="world" /> -->
+<link name="world" /> 
+
+<joint name="world_to_base_joint" type="fixed">
+    <parent link="world" />
+    <child link="base_link" />
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+</joint>
+
 <link name="base_link"/>
 <xacro:arg name="parent" default="base_link" />
 <xacro:arg name="tf_prefix" default="UR_" />

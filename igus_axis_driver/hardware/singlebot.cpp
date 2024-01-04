@@ -98,7 +98,7 @@ hardware_interface::CallbackReturn RRBotSystemPositionOnlyHardware::on_activate(
   // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
   RCLCPP_INFO(
     rclcpp::get_logger("RRBotSystemPositionOnlyHardware"), "Activating ...please wait...");
-
+  
 	xAxis.setDebugModeON();
 	xAxis.setDebugModeOFF();
 
@@ -136,7 +136,7 @@ hardware_interface::return_type RRBotSystemPositionOnlyHardware::read(
   pos=xAxis.getCurrentPosInMM()/1000;
   setvel=xAxis.getCurrentVelInMMS()/1000; // ROS Units are meters
 
-  std::cout << "position in meters" << pos << std::endl;
+  // std::cout << "position in meters" << pos << std::endl;
 
   return hardware_interface::return_type::OK;
 }
@@ -146,7 +146,10 @@ hardware_interface::return_type RRBotSystemPositionOnlyHardware::write(
 {
   // xAxis.profilePositionAbs(pos*1000, setvel, acc, dec);
   // xAxis.profilePositionAbs_Async(pos*1000, setvel, acc, dec);
-    std::cout << "sending veocity command:" << setvel*1000 << std::endl;
+  if (setvel!=0){
+   std::cout << "sending veocity command:" << setvel*1000 << std::endl;
+
+  }
 
   xAxis.profileVelocity(setvel*1000,acc);
   return hardware_interface::return_type::OK;
