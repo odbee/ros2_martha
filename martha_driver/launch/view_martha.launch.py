@@ -35,7 +35,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
-            default_value="martha.urdf.xacro",
+            default_value="marthaEDIT.urdf.xacro",
             description="URDF/XACRO description file with the robot.",
         )
     )
@@ -56,12 +56,22 @@ def generate_launch_description():
         have to be updated.",
         )
     )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "tf_prefix",
+            default_value='""',
+            description="Prefix of the joint names, useful for \
+        multi-robot setup. If changed than also joint names in the controllers' configuration \
+        have to be updated.",
+        )
+    )
 
     # Initialize Arguments
     description_package = LaunchConfiguration("description_package")
     description_file = LaunchConfiguration("description_file")
     gui = LaunchConfiguration("gui")
     prefix = LaunchConfiguration("prefix")
+    tf_prefix = LaunchConfiguration("tf_prefix")
 
     # Get URDF via xacro
     robot_description_content = Command(
@@ -72,8 +82,8 @@ def generate_launch_description():
                 [FindPackageShare(description_package), "urdf", description_file]
             ),
             " ",
-            "prefix:=",
-            prefix,
+            "tf_prefix:=",
+            tf_prefix,
         ]
     )
     robot_description = {"robot_description": robot_description_content}

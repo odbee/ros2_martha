@@ -54,7 +54,8 @@ def launch_setup(context, *args, **kwargs):
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
             " ",
-            PathJoinSubstitution([FindPackageShare("martha_driver"), "urdf", description_file]),
+            # PathJoinSubstitution([FindPackageShare("ur10e_description"), "urdf", "ur_conform.urdf.xacro"]),
+            PathJoinSubstitution([FindPackageShare("martha_driver"), "urdf", "marthaEDIT.urdf.xacro"]),
             " ",
             "robot_ip:=",
             robot_ip,
@@ -84,6 +85,10 @@ def launch_setup(context, *args, **kwargs):
             "tf_prefix:=",
             tf_prefix,
             " ",
+            "prefix:=",
+            prefix,
+            " ",
+            
             "use_fake_hardware:=",
             use_fake_hardware,
             " ",
@@ -232,8 +237,8 @@ def launch_setup(context, *args, **kwargs):
         "io_and_status_controller",
         "speed_scaling_state_broadcaster",
         "force_torque_sensor_broadcaster",
-        "ur_joint_trajectory_controller",
-        "axis_joint_trajectory_controller",
+        # "ur_joint_trajectory_controller",
+        # "axis_joint_trajectory_controller",
         
     ]
     controller_spawner_inactive_names = ["forward_position_controller"]
@@ -364,7 +369,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "prefix",
-            default_value="",
+            default_value="axis_",
             description="tf_prefix of the joint names, useful for \
         multi-robot setup. If changed, also joint names in the controllers' configuration \
         have to be updated.",
@@ -402,7 +407,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "initial_joint_controller",
-            default_value="joint_trajectory_controller",
+            default_value="ur_joint_trajectory_controller",
             description="Initially loaded robot controller.",
         )
     )

@@ -32,24 +32,38 @@
 # Description: After a robot has been loaded, this will execute a series of trajectories.
 
 from launch import LaunchDescription
-from launch.substitutions import PathJoinSubstitution
+from launch.substitutions import PathJoinSubstitution, LaunchConfiguration
 from launch_ros.actions import Node
+from launch.actions import DeclareLaunchArgument
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterFile
 
 
 def generate_launch_description():
+    declared_arguments = []
+
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "ur_prefix",
+            default_value="",
+            description="Prefix of the joint names, useful for \
+        multi-robot setup. If changed than also joint names in the controllers' configuration \
+        have to be updated.",
+        )
+    )
+    ur_prefix = LaunchConfiguration("ur_prefix")
 
     position_goals = PathJoinSubstitution(
         [FindPackageShare("ur_robot_driver"), "config", "test_goal_publishers_config.yaml"]
     )
 
-    return LaunchDescription(
+    return LaunchDescription(declared_arguments +
         [
             Node(
                 package="ros2_controllers_test_nodes",
                 executable="publisher_joint_trajectory_controller",
                 name="publisher_joint_trajectory_controller",
-                parameters=[position_goals],
+                parameters=[ParameterFile(position_goals,allow_substs=True)],
                 output="screen",
             )
         ]

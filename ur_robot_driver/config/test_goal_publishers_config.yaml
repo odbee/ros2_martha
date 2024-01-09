@@ -34,7 +34,7 @@ publisher_scaled_joint_trajectory_controller:
 publisher_joint_trajectory_controller:
   ros__parameters:
 
-    controller_name: "joint_trajectory_controller"
+    controller_name: "ur_joint_trajectory_controller"
     wait_sec_between_publish: 6
 
     goal_names: ["pos1", "pos2", "pos3", "pos4"]
@@ -55,11 +55,4 @@ publisher_joint_trajectory_controller:
       - $(var ur_prefix)wrist_2_joint
       - $(var ur_prefix)wrist_3_joint
 
-    check_starting_point: true
-    starting_point_limits:
-      $(var ur_prefix)shoulder_pan_joint: [-3.0,3.1]
-      $(var ur_prefix)shoulder_lift_joint: [-3.6,3.5]
-      $(var ur_prefix)elbow_joint: [-3.6,3.6]
-      $(var ur_prefix)wrist_1_joint: [-3.6,3.5]
-      $(var ur_prefix)wrist_2_joint: [-3.6,3.6]
-      $(var ur_prefix)wrist_3_joint: [-3.1,3.61]
+    check_starting_point: false

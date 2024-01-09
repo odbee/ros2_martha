@@ -32,6 +32,6 @@
 
 <xacro:include filename="$(find igus_axis_description)/urdf/igus_axis_description.urdf.xacro" />
 
-<!-- <xacro:include filename="$(find ur10e_description)/urdf/ur_description.urdf.xacro" /> -->
+<xacro:include filename="$(find ur10e_description)/urdf/ur_description.urdf.xacro" /> 
 
 </robot>

@@ -38,7 +38,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
-            default_value="igus_axis.urdf.xacro",
+            default_value="martha.urdf.xacro",
             description="URDF/XACRO description file with the robot.",
         )
     )
@@ -74,7 +74,7 @@ def generate_launch_description():
             " ",
             PathJoinSubstitution(
                 [
-                    FindPackageShare(description_package),
+                    FindPackageShare("martha_driver"),
                     "urdf",
                     description_file,
                 ]
@@ -85,11 +85,10 @@ def generate_launch_description():
         ]
     )
     robot_description = {"robot_description": robot_description_content}
+    robot_controllers = PathJoinSubstitution(
+        [FindPackageShare("martha_driver"), "config", "axis_controllers.yaml"]
+    )
 
-    robot_controllers=                launch_ros.parameter_descriptions.ParameterFile(
-                    param_file=os.path.join(get_package_share_directory('igus_axis_driver'), 'config', 'rrbot_controllers.yaml')
-,
-                    allow_substs=True)
 
 
     rviz_config_file = PathJoinSubstitution(

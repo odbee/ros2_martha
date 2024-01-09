@@ -44,7 +44,8 @@ def generate_launch_description():
             "rrbot_singleAxis_joint_trajectory_publisher.yaml",
         ]
     )
-    prefix="axis_"
+    prefix = LaunchConfiguration("prefix")
+
     position_goals=                launch_ros.parameter_descriptions.ParameterFile(
                     param_file=os.path.join(get_package_share_directory('igus_axis_driver'), 'config', 'rrbot_singleAxis_joint_trajectory_publisher.yaml')
 ,

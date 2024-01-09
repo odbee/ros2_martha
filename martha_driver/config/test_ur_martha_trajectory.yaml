@@ -22,3 +22,4 @@ publisher_urjoint_trajectory_controller:
       - UR_wrist_1_joint
       - UR_wrist_2_joint
       - UR_wrist_3_joint
+    check_starting_point: false

@@ -2,10 +2,15 @@
 
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="2dof_robot">
 
-<link name="world" /> 
+<!-- <link name="world" />  -->
+<!-- <joint name="first_k" type="fixed">
+    <parent link="world">
+    <child link="base_link">
+</joint> -->
+<link name="base_link" /> 
 
 
-<xacro:arg name="parent" default="world" />
+<xacro:arg name="parent" default="base_link" />
 <xacro:arg name="tf_prefix" default="" />
 
 <xacro:include filename="$(find ur10e_description)/urdf/ur_description.urdf.xacro" />

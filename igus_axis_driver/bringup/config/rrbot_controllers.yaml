@@ -15,7 +15,7 @@ controller_manager:
 forward_position_controller:
   ros__parameters:
     joints:
-      - $(var prefix)joint1
+      - axis_joint1
       # - joint2
     interface_name: position
 
@@ -23,7 +23,7 @@ forward_position_controller:
 joint_trajectory_position_controller:
   ros__parameters:
     joints:
-      - $(var prefix)joint1
+      - axis_joint1
       # - joint2
 
     command_interfaces:

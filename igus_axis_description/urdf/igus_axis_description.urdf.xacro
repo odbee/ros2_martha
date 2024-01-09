@@ -17,4 +17,5 @@
 
   <xacro:rrbot_ros2_control
     name="RRBot" prefix="$(arg prefix)" />
-</robot>
+
+</robot> 
