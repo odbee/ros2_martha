@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="2dof_robot">
+
+
+
+<!-- <link name="world" /> -->
+<link name="base_link"/>
+<xacro:arg name="axisparent" default="base_link" />
+<xacro:arg name="axisend_link" default="end_link" />
+
+<xacro:arg name="prefix" default="axis_" />
+
+<joint name="connector" type="fixed">
+    <parent link="$(arg prefix)end_link" />
+    <child link="basething" />
+    <origin xyz="0 0 0" rpy="${-0.5*pi} ${0.25*pi} 0"/>
+</joint> 
+
+
+<!-- <joint name="connector" type="fixed">
+    <parent link="$(arg prefix)end_link" />
+    <child link="basething" />
+    <origin xyz="0 0 0" rpy="${-0.5*pi} ${0.25*pi} 0"/>
+</joint> -->
+<link name="basething">
+
+    </link>
+
+<xacro:arg name="parent" default="basething" />
+<xacro:arg name="tf_prefix" default="UR_" />
+
+
+
+<xacro:include filename="$(find igus_axis_description)/urdf/igus_axis_description.urdf.xacro" />
+
+<xacro:include filename="$(find ur10e_description)/urdf/ur_description.urdf.xacro" />
+
+</robot>
