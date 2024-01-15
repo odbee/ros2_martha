@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: igus_axis_description
+    relative_path: urdf/axis.urdf
+  srdf:
+    relative_path: config/2dof_robot.srdf
+  package_settings:
+    author_name: adam
+    author_email: adam@gmail.com
+    generated_timestamp: 1704985022
+  control_xacro:
+    command:
+      - velocity
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - velocity
+    state:
+      - position
+      - velocity

@@ -1,0 +1,2 @@
+robot_ip:=192.168.0.110
+safety_limits:=true safety_pos_margin:=0.15 safety_k_position:=20 name:=ur10e tf_prefix:=UR_ prefix:=axis_ use_fake_hardware:=false fake_sensor_commands:=false headless_mode:=false use_tool_communication:=false reverse_ip:=0.0.0.0 script_command_port:=50004 reverse_port:=50001 script_sender_port:=50002 trajectory_port:=50003 

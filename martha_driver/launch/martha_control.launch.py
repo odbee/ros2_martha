@@ -27,6 +27,7 @@ def launch_setup(context, *args, **kwargs):
     fake_sensor_commands = LaunchConfiguration("fake_sensor_commands")
     controller_spawner_timeout = LaunchConfiguration("controller_spawner_timeout")
     initial_joint_controller = LaunchConfiguration("initial_joint_controller")
+    axis_joint_controller = LaunchConfiguration("initial_joint_controller")
     activate_joint_controller = LaunchConfiguration("activate_joint_controller")
     launch_rviz = LaunchConfiguration("launch_rviz")
     headless_mode = LaunchConfiguration("headless_mode")
@@ -274,6 +275,33 @@ def launch_setup(context, *args, **kwargs):
         condition=UnlessCondition(activate_joint_controller),
     )
 
+
+    axis_joint_controller_spawner_started = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[
+            axis_joint_controller,
+            "-c",
+            "/controller_manager",
+            "--controller-manager-timeout",
+            controller_spawner_timeout,
+        ],
+        condition=IfCondition(activate_joint_controller),
+    )
+    axis_joint_controller_spawner_stopped = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=[
+            axis_joint_controller,
+            "-c",
+            "/controller_manager",
+            "--controller-manager-timeout",
+            controller_spawner_timeout,
+            "--inactive",
+        ],
+        condition=UnlessCondition(activate_joint_controller),
+    )
+
     nodes_to_start = [
         control_node,
         ur_control_node,
@@ -284,6 +312,8 @@ def launch_setup(context, *args, **kwargs):
         rviz_node,
         initial_joint_controller_spawner_stopped,
         initial_joint_controller_spawner_started,
+        axis_joint_controller_spawner_stopped,
+        axis_joint_controller_spawner_started,
     ] + controller_spawners
 
     return nodes_to_start
@@ -409,6 +439,13 @@ def generate_launch_description():
             "initial_joint_controller",
             default_value="ur_joint_trajectory_controller",
             description="Initially loaded robot controller.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "axis_joint_controller",
+            default_value="axis_joint_trajectory_controller",
+            description="Initially loaded axis controller.",
         )
     )
     declared_arguments.append(

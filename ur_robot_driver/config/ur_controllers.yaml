@@ -64,7 +64,46 @@ ur_joint_trajectory_controller:
       - position
     state_publish_rate: 100.0
     action_monitor_rate: 20.0
-    open_loop_control: true
+    allow_partial_joints_goal: true # Defaults to false
+    open_loop_control: false
+    allow_integration_in_goal_trajectories: true
+    gains:
+      $(var tf_prefix)shoulder_pan_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)shoulder_lift_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)elbow_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)wrist_1_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)wrist_2_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)wrist_3_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
 
 
 

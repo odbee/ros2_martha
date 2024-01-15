@@ -1,0 +1,10 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: martha_driver
+    relative_path: urdf/martha_converted.urdf
+  srdf:
+    relative_path: config/martha_robot.srdf
+  package_settings:
+    author_name: adam
+    author_email: adam@gasd.com
+    generated_timestamp: 1705325691

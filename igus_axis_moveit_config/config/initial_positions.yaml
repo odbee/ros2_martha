@@ -1,0 +1,4 @@
+# Default initial positions for 2dof_robot's ros2_control fake system
+
+initial_positions:
+  axis_joint1: 0

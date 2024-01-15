@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="martha_robot">
+    <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
+
+    <!-- Import martha_robot urdf file -->
+    <xacro:include filename="$(find martha_driver)/urdf/martha_converted.urdf" />
+
+    <!-- Import control_xacro -->
+    <xacro:include filename="martha_robot.ros2_control.xacro" />
+
+
+    <xacro:martha_robot_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
+
+</robot>

@@ -1,0 +1,10 @@
+# Default initial positions for martha_robot's ros2_control fake system
+
+initial_positions:
+  UR_elbow_joint: 0
+  UR_shoulder_lift_joint: 0
+  UR_shoulder_pan_joint: 0
+  UR_wrist_1_joint: 0
+  UR_wrist_2_joint: 0
+  UR_wrist_3_joint: 0
+  axis_joint1: 0

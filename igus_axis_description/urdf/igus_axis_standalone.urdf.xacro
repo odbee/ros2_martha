@@ -6,13 +6,15 @@ https://github.com/ros-simulation/gazebo_ros_demos/blob/kinetic-devel/rrbot_desc
 -->
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="2dof_robot">
   <!-- Used for fixing robot -->
-<link name="base_link"/>
-<xacro:arg name="axisparent" default="base_link" />
-<xacro:arg name="prefix" default="axis_" />
-<xacro:arg name="axisend_link" default="end_link" />
+<link name="world"/>
+
+  <joint name="joint_world_to_base" type="fixed">
+    <parent link="world"/>
+    <child link="base_link" />
+  </joint>
 
 
 
-  <xacro:include filename="$(find igus_axis_description)/urdf/igus_axis_description.urdf.xacro" />
+  <xacro:include filename="$(find igus_axis_description)/urdf/igus_axis.urdf.xacro" />
 
 </robot>
