@@ -31,12 +31,6 @@ axis_joint_trajectory_controller:
   ros__parameters:
     joints:
       - axis_joint1
-      - UR_shoulder_pan_joint
-      - UR_shoulder_lift_joint
-      - UR_elbow_joint
-      - UR_wrist_1_joint
-      - UR_wrist_2_joint
-      - UR_wrist_3_joint
     command_interfaces:
       []
     state_interfaces:
