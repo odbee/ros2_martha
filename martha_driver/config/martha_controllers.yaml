@@ -60,34 +60,69 @@ force_torque_sensor_broadcaster:
     topic_name: ft_data
 
 
-# joint_trajectory_controller:
-#   ros__parameters:
-#     joints:
-#       - axis_joint1
-#       - UR_shoulder_pan_joint
-#       - UR_shoulder_lift_joint
-#       - UR_elbow_joint
-#       - UR_wrist_1_joint
-#       - UR_wrist_2_joint
-#       - UR_wrist_3_joint
-#     command_interfaces:
-#       - velocity
-#     state_interfaces:
-#       - position
-#       - velocity
-#     state_publish_rate: 100.0
-#     action_monitor_rate: 20.0
-#     allow_partial_joints_goal: true
-#     # constraints:
-#     #   stopped_velocity_tolerance: 0.2
-#     #   goal_time: 0.0
-#     #   axis_joint1: { trajectory: 0.2, goal: 0.1 }
-#     #   UR_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
-#     #   UR_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
-#     #   UR_elbow_joint: { trajectory: 0.2, goal: 0.1 }
-#     #   UR_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
-#     #   UR_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
-#     #   UR_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - axis_joint1
+      - UR_shoulder_pan_joint
+      - UR_shoulder_lift_joint
+      - UR_elbow_joint
+      - UR_wrist_1_joint
+      - UR_wrist_2_joint
+      - UR_wrist_3_joint
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: true # Defaults to false
+    open_loop_control: false
+    allow_integration_in_goal_trajectories: true
+    gains:
+      axis_joint1:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)shoulder_pan_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)shoulder_lift_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)elbow_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)wrist_1_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)wrist_2_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)wrist_3_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
 
 ur_joint_trajectory_controller:
   ros__parameters:

@@ -238,8 +238,7 @@ def launch_setup(context, *args, **kwargs):
         "io_and_status_controller",
         "speed_scaling_state_broadcaster",
         "force_torque_sensor_broadcaster",
-        # "ur_joint_trajectory_controller",
-        # "axis_joint_trajectory_controller",
+
         
     ]
     controller_spawner_inactive_names = ["forward_position_controller"]
@@ -312,8 +311,8 @@ def launch_setup(context, *args, **kwargs):
         rviz_node,
         initial_joint_controller_spawner_stopped,
         initial_joint_controller_spawner_started,
-        axis_joint_controller_spawner_stopped,
-        axis_joint_controller_spawner_started,
+        # axis_joint_controller_spawner_stopped,
+        # axis_joint_controller_spawner_started,
     ] + controller_spawners
 
     return nodes_to_start
@@ -437,7 +436,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "initial_joint_controller",
-            default_value="ur_joint_trajectory_controller",
+            default_value="joint_trajectory_controller",
             description="Initially loaded robot controller.",
         )
     )
