@@ -27,7 +27,7 @@
 
     </link>
 
-<xacro:arg name="parent" default="basething" />
+<xacro:arg name="parent" default="base_link" />
 <xacro:arg name="tf_prefix" default="UR_" />
 
 

@@ -146,10 +146,10 @@ hardware_interface::return_type RRBotSystemPositionOnlyHardware::write(
 {
   // xAxis.profilePositionAbs(pos*1000, setvel, acc, dec);
   // xAxis.profilePositionAbs_Async(pos*1000, setvel, acc, dec);
-  if (setvel!=0){
-   std::cout << "sending veocity command:" << setvel*1000 << std::endl;
+  // if (setvel!=0){
+  //  std::cout << "sending veocity command:" << setvel*1000 << std::endl;
 
-  }
+  // }
 
   xAxis.profileVelocity(setvel*1000,acc);
   return hardware_interface::return_type::OK;

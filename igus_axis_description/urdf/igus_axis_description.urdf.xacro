@@ -15,7 +15,6 @@
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:rrbot>
 
-  <xacro:rrbot_ros2_control
-    name="RRBot" prefix="$(arg prefix)" />
+  <xacro:rrbot_ros2_control    namae="RRBot" prefix="$(arg prefix)" axis_ip="$(arg axis_ip)" />
 
 </robot> 

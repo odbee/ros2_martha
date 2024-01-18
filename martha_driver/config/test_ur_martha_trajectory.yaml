@@ -16,10 +16,10 @@ publisher_urjoint_trajectory_controller:
       positions: [0.0, -1.57, 0.0, 0.0, 0.0, 0.0]
 
     joints:
-      - UR_shoulder_pan_joint
-      - UR_shoulder_lift_joint
-      - UR_elbow_joint
-      - UR_wrist_1_joint
-      - UR_wrist_2_joint
-      - UR_wrist_3_joint
+      - $(var tf_prefix)shoulder_pan_joint
+      - $(var tf_prefix)shoulder_lift_joint
+      - $(var tf_prefix)elbow_joint
+      - $(var tf_prefix)wrist_1_joint
+      - $(var tf_prefix)wrist_2_joint
+      - $(var tf_prefix)wrist_3_joint
     check_starting_point: false

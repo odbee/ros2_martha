@@ -10,7 +10,7 @@ https://github.com/ros-simulation/gazebo_ros_demos/blob/kinetic-devel/rrbot_desc
 <xacro:arg name="axisparent" default="base_link" />
 <xacro:arg name="prefix" default="axis_" />
 <xacro:arg name="axisend_link" default="end_link" />
-
+<xacro:arg name="axis_ip" default="192.168.0.10" />
 
 
   <xacro:include filename="$(find igus_axis_description)/urdf/igus_axis_description.urdf.xacro" />

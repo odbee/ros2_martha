@@ -4,7 +4,7 @@
 Copied and modified from ROS1 example -
 https://github.com/ros-simulation/gazebo_ros_demos/blob/kinetic-devel/rrbot_description/urdf/rrbot.xacro
 -->
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="2dof_robot">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="igus_axis">
   <!-- Used for fixing robot -->
 <link name="world"/>
 

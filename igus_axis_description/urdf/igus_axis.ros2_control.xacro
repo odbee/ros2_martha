@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:macro name="rrbot_ros2_control" params="name prefix">
+  <xacro:macro name="rrbot_ros2_control" params="namae prefix axis_ip">
 
-    <ros2_control name="${name}" type="system">
+    <ros2_control name="${namae}" type="system">
       <hardware>
         <plugin>igus_axis_driver/RRBotSystemPositionOnlyHardware</plugin>
         <param name="example_param_hw_start_duration_sec">0</param>
         <param name="example_param_hw_stop_duration_sec">3.0</param>
         <param name="example_param_hw_slowdown">100</param>
-        <param name="ip">192.168.0.10</param>
+        <param name="ip">${axis_ip}</param>
         <param name="axisName">${prefix}joint1</param>
         <param name="port">502</param>
         <param name="acc">200</param>

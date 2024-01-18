@@ -28,47 +28,63 @@
 
 #
 # Author: Denis Stogl
-#
-# Description: After a robot has been loaded, this will execute a series of trajectories.
 
 from launch import LaunchDescription
-from launch.substitutions import PathJoinSubstitution
-from launch_ros.actions import Node
-from launch_ros.substitutions import FindPackageShare
-from launch_ros.parameter_descriptions import ParameterFile
-
-from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
-
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration, ThisLaunchFileDir
 
 
 def generate_launch_description():
-
-    position_goals = PathJoinSubstitution(
-        [FindPackageShare("martha_driver"), "config", "test_ur_martha_trajectory.yaml"]
-    )
+    # Declare arguments
     declared_arguments = []
     declared_arguments.append(
         DeclareLaunchArgument(
-            "tf_prefix",
-            default_value="UR_",
-            description="ur_prefix of the joint names, useful for \
-        multi-robot setup. If changed, also joint names in the controllers' configuration \
-        have to be updated.",
+            "robot_ip",
+            default_value="192.168.0.110",
+            description="IP address by which the robot can be reached.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "axis_ip",
+            default_value="192.168.0.10",
+            description="IP address by which the axis can be reached.",
         )
     )
 
-    tf_prefix = LaunchConfiguration("tf_prefix")
 
-    return LaunchDescription(declared_arguments+
-        [
-            Node(
-                package="ros2_controllers_test_nodes",
-                executable="publisher_joint_trajectory_controller",
-                name="publisher_urjoint_trajectory_controller",
-                parameters=[ParameterFile(position_goals,allow_substs=True)],
-                output="screen",
-            )
-        ]
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "activate_ur_joint_controller",
+            default_value="true",
+            description="Activate loaded joint controller.",
+        )
     )
+
+    # Initialize Arguments
+    robot_ip = LaunchConfiguration("robot_ip")
+    axis_ip = LaunchConfiguration("axis_ip")
+
+    activate_ur_joint_controller = LaunchConfiguration("activate_ur_joint_controller")
+
+    ur_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([ThisLaunchFileDir(), "/ur_control.launch.py"]),
+        launch_arguments={
+            "robot_ip": robot_ip,
+            "activate_joint_controller": activate_ur_joint_controller,
+            "tf_prefix": "UR_",
+            "headless_mode": "true",
+        }.items(),
+    )
+    igus_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource([ThisLaunchFileDir(), "/axis_control.launch.py"]),
+        launch_arguments={
+            "axis_ip": axis_ip,
+            "prefix": "axis_",
+        }.items(),
+    )
+
+
+
+    return LaunchDescription(declared_arguments + [ igus_launch])

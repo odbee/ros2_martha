@@ -127,23 +127,22 @@ joint_trajectory_controller:
 ur_joint_trajectory_controller:
   ros__parameters:
     joints:
-      - $(var tf_prefix)shoulder_pan_joint
-      - $(var tf_prefix)shoulder_lift_joint
-      - $(var tf_prefix)elbow_joint
-      - $(var tf_prefix)wrist_1_joint
-      - $(var tf_prefix)wrist_2_joint
-      - $(var tf_prefix)wrist_3_joint
+      - UR_shoulder_pan_joint
+      - UR_shoulder_lift_joint
+      - UR_elbow_joint
+      - UR_wrist_1_joint
+      - UR_wrist_2_joint
+      - UR_wrist_3_joint
     command_interfaces:
       - velocity
     state_interfaces:
-      - velocity
       - position
+      - velocity
     state_publish_rate: 100.0
     action_monitor_rate: 20.0
     allow_partial_joints_goal: true # Defaults to false
     open_loop_control: false
     allow_integration_in_goal_trajectories: true
-    allow_nonzero_velocity_at_trajectory_end: false
     gains:
       $(var tf_prefix)shoulder_pan_joint:
         p: 0.5
@@ -198,7 +197,7 @@ axis_joint_trajectory_controller:
 
     state_publish_rate: 200.0 # Defaults to 50
     action_monitor_rate: 20.0 # Defaults to 20
-    allow_nonzero_velocity_at_trajectory_end: false
+
     allow_partial_joints_goal: false # Defaults to false
     open_loop_control: true
     allow_integration_in_goal_trajectories: true

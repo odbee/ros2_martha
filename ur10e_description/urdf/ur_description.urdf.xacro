@@ -4,6 +4,9 @@
    <xacro:arg name="name" default=""/>
    <!-- import main macro -->
    <xacro:include filename="$(find ur10e_description)/urdf/ur_macro.xacro"/>
+   <xacro:include filename="$(find ur10e_description)/urdf/inc/ur_transmissions.xacro" />
+   <xacro:include filename="$(find ur10e_description)/urdf/inc/ur_common.xacro" />
+
    <!-- parameters -->
    <xacro:arg name="joint_limit_params" default="$(find ur10e_description)/config/joint_limits.yaml"/>
    <xacro:arg name="kinematics_params" default="$(find ur10e_description)/config/default_kinematics.yaml"/>
