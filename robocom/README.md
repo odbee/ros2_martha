@@ -11,6 +11,13 @@ keeps track of all the commands by storing it in a list. it woks on the recv_cmd
 ### external_command_receiver
 manages all communcation between external software by running a TCP server that receives commands to forward them to the command_list_manager. the current available format is with json compatible text.
 
+example file:
+```json
+{'commands': [{'command': 'movel(p[0.6,-0.13,0.4,-1.5707963267949,0,0], a=0.6, v=0.1, t=0, r=0)\n', 'commandtype': 'urscript'}, {'command': 'movel(p[0.6,-0.13,0.8,0,0,0], a=0.6, v=0.1, t=0, r=0)\n', 'commandtype': 'urscript'}, {'command': '0', 'commandtype': 'gripper'}, {'command': '208', 'commandtype': 'gripper'}, {'command': '146', 'commandtype': 'gripper'}]}
+```
+
+
+
 ### gripper_execution_note 
 is a fork from https://gist.github.com/felixvd/d538cad3150e9cac28dae0a3132701cf#file-cmodel_urcap-py adapted to receive gripper commands and directly execute them
 
