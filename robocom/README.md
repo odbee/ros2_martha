@@ -2,7 +2,7 @@
 
 robocom is the amalgamation of all important robot communcation nodes.
 
-### command_execution_manager_2
+### command_execution_manager
 is currently the active command execution manager. It receives all commands from the command_list_manager through the recv_cmd thread and forwards them to gripper, robot, camera client and axis.
 right now it can freeze if the executed command breaks or any other errors happen.
 ### command_list_manager

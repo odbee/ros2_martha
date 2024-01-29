@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(martha_driver)
+project(mv2_com)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -9,15 +9,37 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
-set(THIS_PACKAGE_INCLUDE_DEPENDS
-  ament_cmake
-  rclcpp
-  rclcpp_action
+find_package(rclcpp_components REQUIRED)
+find_package(moveit_core REQUIRED)
+find_package(moveit_visual_tools REQUIRED)
+find_package(mv2_com_interfaces REQUIRED)
 
+add_executable(mv2_com_server src/mv2_com_server.cpp)
+target_include_directories(mv2_com_server PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_compile_features(mv2_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+ament_target_dependencies(
+  mv2_com_server
+  "rclcpp"
+  "rclcpp_action"
+  "rclcpp_components"
+  "moveit_core"
+  "moveit_visual_tools"
+  "mv2_com_interfaces"
 )
+
+install(TARGETS mv2_com_server
+  DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(DIRECTORY config
+  DESTINATION share/${PROJECT_NAME}
+)
+
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -30,14 +52,5 @@ if(BUILD_TESTING)
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
-
-install(
-  DIRECTORY urdf rviz launch config
-  DESTINATION share/${PROJECT_NAME}
-)
-
-
-
 
 ament_package()

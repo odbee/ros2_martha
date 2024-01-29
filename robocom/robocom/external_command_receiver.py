@@ -6,6 +6,8 @@ import threading
 from std_msgs.msg import String
 
 
+# TODO RETURN INVALID COMMAND TO CLIENT
+# TODO SET PORT BY LAUNCH FILE
 # HOST = '127.0.0.1'
 # HOST = '192.168.1.141'
 HOST=socket.gethostbyname(socket.gethostname())
@@ -16,6 +18,7 @@ FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
 
 
+
 class ExternalCommandPublisher(Node):
 
     def __init__(self):
@@ -23,9 +26,12 @@ class ExternalCommandPublisher(Node):
         
         self.publisher_ = self.create_publisher(String, 'external_commands_topic', 100)
         self.get_logger().info("STARTING PUBLISHER ON %s" % HOST)
+
+        # create server
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind(ADDR)
         self.server.listen()
+        # run server in loop
         while True:
             conn, addr = self.server.accept()
             thread = threading.Thread(target=self.handle_client, args=(conn, addr))
@@ -38,10 +44,10 @@ class ExternalCommandPublisher(Node):
         # self.get_logger().info('[NEW CONNECTION] "%s" connected.' % str(addr))
         connected = True
         while connected:
-            msg_length = conn.recv(HEADER).decode(FORMAT)
+            msg_length = conn.recv(HEADER).decode(FORMAT) #first we receive the header file to tell us how long the message is
             if msg_length:
                 msg_length = int(msg_length)
-                msg = conn.recv(msg_length).decode(FORMAT)
+                msg = conn.recv(msg_length).decode(FORMAT)  #then we use the received message length to parse te actual message
                 if msg == DISCONNECT_MESSAGE:
                     connected = False
                 else:

@@ -18,7 +18,7 @@ class CommandExecutionManager(Node):
         self.allowedToRun=True
         self.readytorequest=True
         #create client to get command from lists
-        self.cli=self.create_client(ReceiveCommand, 'return_first_cmd')
+        self.cli=self.create_client(ReceiveCommand, 'recv_cmd')
         self.remove_first_item_client=self.create_client(Empty, 'remove_first_cmd')
         #create clients to forward command to executers
         self.gripperclient=self.create_client(SendOrderReturnResult, 'gripper_order')

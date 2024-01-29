@@ -30,7 +30,7 @@ setup(
         'console_scripts': [
             'externalreceiver = robocom.external_command_receiver:main',
             'commandlistmanager = robocom.command_list_manager:main',
-            'commandexecutionmanager = robocom.command_execution_manager_2:main',
+            'commandexecutionmanager = robocom.command_execution_manager:main',
             'gripperexecutionnode = robocom.gripper_execution_node:main',
             'managertogripper= robocom.manager_to_gripper_service:main',
             'rtdestatepublisher= robocom.rtde_state_publisher:main',
