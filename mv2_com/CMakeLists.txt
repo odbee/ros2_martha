@@ -6,89 +6,89 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
 endif()
 
 
-set(THIS_PACKAGE_INCLUDE_DEPENDS
-  ament_cmake
-  Eigen3
-  moveit_core
-  moveit_msgs
-  moveit_ros_planning
-  moveit_ros_planning_interface
-  moveit_task_constructor_core
-  moveit_visual_tools
-  pluginlib
-  rclcpp
-  rclcpp_action
-  rclcpp_components
+# set(THIS_PACKAGE_INCLUDE_DEPENDS
+#   ament_cmake
+#   Eigen3
+#   moveit_core
+#   moveit_msgs
+#   moveit_ros_planning
+#   moveit_ros_planning_interface
+#   # moveit_task_constructor_core
+#   moveit_visual_tools
+#   pluginlib
+#   rclcpp
+#   rclcpp_action
+#   rclcpp_components
 
-  rviz_visual_tools
-  tf2_geometry_msgs
-  tf2_ros
-  geometry_msgs
-  mv2_com_interfaces
-  example_interfaces
-)
+#   rviz_visual_tools
+#   tf2_geometry_msgs
+#   tf2_ros
+#   geometry_msgs
+#   mv2_com_interfaces
+#   example_interfaces
+# )
 
-foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
-  find_package(${Dependency} REQUIRED)
-endforeach()
-
-
-
-add_executable(mv2_com_server src/mv2_com_server.cpp)
-add_executable(ur_mv2_com_server src/ur_mv2_com_server.cpp)
-
-add_executable(mg_com_server src/mg_com_server.cpp)
-
-target_include_directories(mv2_com_server PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-
-target_include_directories(mv2_com_server PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+# foreach(Dependency IN ITEMS ${THIS_PACKAGE_INCLUDE_DEPENDS})
+#   find_package(${Dependency} REQUIRED)
+# endforeach()
 
 
-target_include_directories(mg_com_server PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+
+# add_executable(mv2_com_server src/mv2_com_server.cpp)
+# add_executable(ur_mv2_com_server src/ur_mv2_com_server.cpp)
+
+# add_executable(mg_com_server src/mg_com_server.cpp)
+
+# target_include_directories(mv2_com_server PUBLIC
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   $<INSTALL_INTERFACE:include>)
+
+# target_include_directories(mv2_com_server PUBLIC
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   $<INSTALL_INTERFACE:include>)
+
+
+# target_include_directories(mg_com_server PUBLIC
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+#   $<INSTALL_INTERFACE:include>)
  
-target_compile_features(mv2_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
-target_compile_features(mg_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
-target_compile_features(ur_mv2_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+# target_compile_features(mv2_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+# target_compile_features(mg_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+# target_compile_features(ur_mv2_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 
-ament_target_dependencies(
-  mv2_com_server
+# ament_target_dependencies(
+#   mv2_com_server
 
-  ${THIS_PACKAGE_INCLUDE_DEPENDS}
-)
+#   ${THIS_PACKAGE_INCLUDE_DEPENDS}
+# )
 
-ament_target_dependencies(
-  ur_mv2_com_server
+# ament_target_dependencies(
+#   ur_mv2_com_server
 
-  ${THIS_PACKAGE_INCLUDE_DEPENDS}
-)
-
-
-ament_target_dependencies(
-  mg_com_server
-  ${THIS_PACKAGE_INCLUDE_DEPENDS}
-)
+#   ${THIS_PACKAGE_INCLUDE_DEPENDS}
+# )
 
 
+# ament_target_dependencies(
+#   mg_com_server
+#   ${THIS_PACKAGE_INCLUDE_DEPENDS}
+# )
 
-install(TARGETS
-    mv2_com_server
-    mg_com_server
-  DESTINATION lib/${PROJECT_NAME})
 
 
-install(DIRECTORY launch
-  DESTINATION share/${PROJECT_NAME}
-)
+# install(TARGETS
+#     mv2_com_server
+#     mg_com_server
+#   DESTINATION lib/${PROJECT_NAME})
 
-install(DIRECTORY config
-  DESTINATION share/${PROJECT_NAME}
-)
+
+# install(DIRECTORY launch
+#   DESTINATION share/${PROJECT_NAME}
+# )
+
+# install(DIRECTORY config
+#   DESTINATION share/${PROJECT_NAME}
+# )
 
 
 if(BUILD_TESTING)
