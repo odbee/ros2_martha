@@ -8,7 +8,7 @@ def generate_launch_description():
 
     # MoveGroupInterface demo executable
     move_group_demo = Node(
-        name="mg_com_server",
+        # name="mg_com_server",
         package="mv2_com",
         executable="mg_com_server",
         output="screen",
