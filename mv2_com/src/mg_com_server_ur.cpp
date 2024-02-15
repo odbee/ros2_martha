@@ -22,7 +22,7 @@ namespace rvt = rviz_visual_tools;
 
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("babybaby");
-std::string PlanningGroup="panda_arm";
+std::string PlanningGroup="ur_manipulator";
 
 
 class RobotServices : public rclcpp::Node {
