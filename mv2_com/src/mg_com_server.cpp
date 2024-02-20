@@ -22,13 +22,17 @@ namespace rvt = rviz_visual_tools;
 
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("babybaby");
-std::string PlanningGroup="panda_arm";
 
 
 class RobotServices : public rclcpp::Node {
 public:
-  RobotServices(float sleep_timer) : Node("movepose_serviceholder") {    
-    PLANNING_GROUP="";
+  RobotServices(float sleep_timer) : Node("movepose_serviceholder") { 
+    auto param_desc = rcl_interfaces::msg::ParameterDescriptor{};
+    param_desc.description = "Planning Group for move_group execution";
+
+    this->declare_parameter("planning_group", "PLEASE_DECLARE_PLANNING_GROUP_IN_LAUNCH_FILE", param_desc);
+    
+    PLANNING_GROUP=this->get_parameter("planning_group").as_string();
     planning_scene_interface=nullptr;
     move_group=nullptr;
     joint_model_group_ptr=nullptr;
@@ -131,9 +135,6 @@ int main(int argc, char **argv)
 
 
   RCLCPP_INFO(LOGGER, "done spinning");
-
-
-  RS->PLANNING_GROUP = PlanningGroup;
 
   RS->move_group=std::make_shared<moveit::planning_interface::MoveGroupInterface>(move_group_node, RS->PLANNING_GROUP);
   executor.spin();

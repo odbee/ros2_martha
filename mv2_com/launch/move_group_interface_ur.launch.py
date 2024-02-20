@@ -260,7 +260,7 @@ def generate_launch_description():
     move_group_demo = Node(
         # name="mg_com_server",
         package="mv2_com",
-        executable="mg_com_server_ur",
+        executable="mg_com_server",
         output="screen",
         parameters=[
             robot_description,
@@ -273,6 +273,7 @@ def generate_launch_description():
             planning_scene_monitor_parameters,
             {"use_sim_time": use_sim_time},
             warehouse_ros_config,
+            {"planning_group": "ur_manipulator"}
         ],
     )
 
