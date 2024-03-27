@@ -17,6 +17,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             "ur_type",
             description="Type/series of used UR robot.",
+            default_value="ur10e",
             choices=["ur3", "ur3e", "ur5", "ur5e", "ur10", "ur10e", "ur16e", "ur20"],
         )
     )
@@ -273,7 +274,8 @@ def generate_launch_description():
             planning_scene_monitor_parameters,
             {"use_sim_time": use_sim_time},
             warehouse_ros_config,
-            {"planning_group": "ur_manipulator"}
+            {"planning_group": "ur_manipulator"},
+            {"base_frame": "base_link"}
         ],
     )
 

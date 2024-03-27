@@ -43,13 +43,6 @@ hardware_interface::CallbackReturn RRBotSystemPositionOnlyHardware::on_init(
   dec=stod(info_.hardware_parameters["dec"]);
   setvel=stod(info_.hardware_parameters["setvel"]);
 
-  // BEGIN: This part here is for exemplary purposes - Please do not copy to your production code
-  hw_start_sec_ = stod(info_.hardware_parameters["example_param_hw_start_duration_sec"]);
-  hw_stop_sec_ = stod(info_.hardware_parameters["example_param_hw_stop_duration_sec"]);
-  hw_slowdown_ = stod(info_.hardware_parameters["example_param_hw_slowdown"]);
-  // END: This part here is for exemplary purposes - Please do not copy to your production code
-  hw_states_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
-  hw_commands_.resize(info_.joints.size(), std::numeric_limits<double>::quiet_NaN());
 
   return hardware_interface::CallbackReturn::SUCCESS;
 }

@@ -14,6 +14,9 @@ controller_manager:
 
     ur_joint_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
+    
+    ur_joint_trajectory_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
 
     scaled_joint_trajectory_controller:
       type: velocity_controllers/JointGroupVelocityController
@@ -105,6 +108,62 @@ ur_joint_trajectory_controller:
         i_clamp: 0.0
         ff_velocity_scale: 1.0
 
+ur_joint_trajectory_controller:
+  ros__parameters:
+    joints:
+      - $(var tf_prefix)shoulder_pan_joint
+      - $(var tf_prefix)shoulder_lift_joint
+      - $(var tf_prefix)elbow_joint
+      - $(var tf_prefix)wrist_1_joint
+      - $(var tf_prefix)wrist_2_joint
+      - $(var tf_prefix)wrist_3_joint
+    command_interfaces:
+      - velocity
+    state_interfaces:
+      - velocity
+      - position
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0
+    allow_partial_joints_goal: true # Defaults to false
+    open_loop_control: false
+    allow_integration_in_goal_trajectories: true
+    gains:
+      $(var tf_prefix)shoulder_pan_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)shoulder_lift_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)elbow_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)wrist_1_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)wrist_2_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
+      $(var tf_prefix)wrist_3_joint:
+        p: 0.5
+        i: 0.0
+        d: 0.0
+        i_clamp: 0.0
+        ff_velocity_scale: 1.0
 
 
 scaled_joint_trajectory_controller:

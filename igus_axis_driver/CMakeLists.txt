@@ -11,7 +11,12 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   pluginlib
   rclcpp
   rclcpp_lifecycle
+  igus_axis_interfaces
+  
 )
+
+
+
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
@@ -28,6 +33,25 @@ add_library(
   hardware/D1.cpp
 
 )
+
+
+add_executable(axis_mover_service src/axis_mover_service.cpp hardware/D1.cpp)
+# set(SOURCES
+#   src/axis_mover_service.cpp
+#   hardware/D1.cpp  # Add this line to include your file
+# )
+
+ament_target_dependencies(axis_mover_service rclcpp igus_axis_interfaces)    # CHANGE
+
+
+install(TARGETS
+  axis_mover_service
+  DESTINATION lib/${PROJECT_NAME})
+
+
+
+
+
 target_compile_features(igus_axis_driver PUBLIC cxx_std_17)
 target_include_directories(igus_axis_driver PUBLIC
 $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/hardware/include>

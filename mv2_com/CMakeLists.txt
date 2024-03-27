@@ -19,7 +19,7 @@ set(THIS_PACKAGE_INCLUDE_DEPENDS
   rclcpp
   rclcpp_action
   rclcpp_components
-
+  common_interfaces
   rviz_visual_tools
   tf2_geometry_msgs
   tf2_ros

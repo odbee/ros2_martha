@@ -1,0 +1,4 @@
+float64 pos # absolute position
+---
+bool success # indicates successful mode
+string message # informational, for error messages
