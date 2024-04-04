@@ -4,10 +4,10 @@
   <!-- robot name parameter -->
   <xacro:arg name="name" default="ur"/>
   <!-- parameters -->
-  <xacro:arg name="tf_prefix" default="" />
+  <xacro:arg name="prefix" default="" />
 
-  <xacro:include filename="$(find ur_moveit_config)/srdf/ur_macro.srdf.xacro"/>
+  <xacro:include filename="$(find ur_moveit_config)/srdf/ur_extruder_macro.srdf.xacro"/>
 
-  <xacro:ur_srdf name="$(arg name)" prefix="$(arg tf_prefix)"/>
+  <xacro:ur_srdf name="$(arg name)" prefix="$(arg prefix)"/>
 
 </robot>

@@ -9,7 +9,7 @@
   <maintainer email="bence.magyar.robotics@gmail.com">Bence Magyar</maintainer>
   <maintainer email="christoph.froehlich@ait.ac.at">Christoph Froehlich</maintainer>
 
-  <author email="denis.stogl@stoglrobotics.de">Dr.-Ing. Denis Štogl</author>
+  <author email="denis.sFtogl@stoglrobotics.de">Dr.-Ing. Denis Štogl</author>
 
   <license>Apache-2.0</license>
 
@@ -27,6 +27,8 @@
   <exec_depend>joint_trajectory_controller</exec_depend>
   <exec_depend>robot_state_publisher</exec_depend>
   <exec_depend>igus_axis_description</exec_depend>
+  <exec_depend>igus_axis_interfaces</exec_depend>
+  
   <exec_depend>ros2_controllers_test_nodes</exec_depend>
   <exec_depend>ros2controlcli</exec_depend>
   <exec_depend>ros2launch</exec_depend>

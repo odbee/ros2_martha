@@ -35,30 +35,20 @@ from launch import LaunchDescription
 from launch.substitutions import PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-from launch_ros.parameter_descriptions import ParameterFile
-
-from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
-
 
 
 def generate_launch_description():
+    print(
+        "\033[91m"
+        "DEPRECATION WARNING: "
+        "Launch files from the ur_bringup package are deprecated and will be removed from Iron "
+        "Irwini on. Please use the same launch files from the ur_robot_driver package."
+        "\033[0m"
+    )
 
     position_goals = PathJoinSubstitution(
-        [FindPackageShare("ur_robot_driver"), "config", "test_goal_publishers_config.yaml"]
+        [FindPackageShare("ur_bringup"), "config", "test_goal_publishers_config.yaml"]
     )
-    declared_arguments = []
-    declared_arguments.append(
-        DeclareLaunchArgument(
-            "ur_prefix",
-            default_value="",
-            description="ur_prefix of the joint names, useful for \
-        multi-robot setup. If changed, also joint names in the controllers' configuration \
-        have to be updated.",
-        )
-    )
-    ur_prefix = LaunchConfiguration("ur_prefix")
 
     return LaunchDescription(
         [
@@ -66,7 +56,7 @@ def generate_launch_description():
                 package="ros2_controllers_test_nodes",
                 executable="publisher_joint_trajectory_controller",
                 name="publisher_joint_trajectory_controller",
-                parameters=[ParameterFile(position_goals,allow_substs=True)],
+                parameters=[position_goals],
                 output="screen",
             )
         ]

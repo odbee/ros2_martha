@@ -37,6 +37,7 @@ endforeach()
 add_executable(mv2_com_server src/mv2_com_server.cpp)
 add_executable(ur_mv2_com_server src/ur_mv2_com_server.cpp)
 add_executable(mg_com_server src/mg_com_server.cpp)
+add_executable(move_group_interface_tutorial src/move_group_interface_tutorial.cpp)
 
 target_include_directories(mv2_com_server PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -50,10 +51,16 @@ target_include_directories(mv2_com_server PUBLIC
 target_include_directories(mg_com_server PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+
+  target_include_directories(move_group_interface_tutorial PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
  
 target_compile_features(mv2_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 target_compile_features(mg_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 target_compile_features(ur_mv2_com_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+target_compile_features(move_group_interface_tutorial PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+
 
 ament_target_dependencies(
   mv2_com_server
@@ -72,12 +79,18 @@ ament_target_dependencies(
   mg_com_server
   ${THIS_PACKAGE_INCLUDE_DEPENDS}
 )
+ament_target_dependencies(
+  move_group_interface_tutorial
+  ${THIS_PACKAGE_INCLUDE_DEPENDS}
+)
+
 
 
 
 install(TARGETS
     mv2_com_server
     mg_com_server
+    move_group_interface_tutorial
     
   DESTINATION lib/${PROJECT_NAME})
 

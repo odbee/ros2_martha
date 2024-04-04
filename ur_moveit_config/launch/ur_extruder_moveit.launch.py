@@ -261,6 +261,7 @@ def generate_launch_description():
         DeclareLaunchArgument(
             "ur_type",
             description="Type/series of used UR robot.",
+            default_value="ur10e",
             choices=["ur3", "ur3e", "ur5", "ur5e", "ur10", "ur10e", "ur16e", "ur20"],
         )
     )
@@ -304,7 +305,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "description_file",
-            default_value="ur.urdf.xacro",
+            default_value="ur_extruder.urdf.xacro",
             description="URDF/XACRO description file with the robot.",
         )
     )
@@ -319,7 +320,7 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "moveit_config_file",
-            default_value="ur.srdf.xacro",
+            default_value="ur_extruder.srdf.xacro",
             description="MoveIt SRDF/XACRO description file with the robot.",
         )
     )
