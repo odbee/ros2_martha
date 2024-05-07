@@ -37,6 +37,8 @@ setup(
             'robotexecutionnode= robocom.robot_execution_node:main',
             'robotlooper= robocom.robot_looper:main',
             'queueshouter= robocom.queueshouter:main',
+            'movecommandhandler= robocom.move_command_handler:main',
+
             
             
         ],

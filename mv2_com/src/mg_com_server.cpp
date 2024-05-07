@@ -57,9 +57,29 @@ public:
 
 };
 
-
-
 void plan_move_robot(const std::shared_ptr<mv2_com_interfaces::srv::MovePose::Request> request,
+          std::shared_ptr<mv2_com_interfaces::srv::MovePose::Response>      response,std::shared_ptr<RobotServices> RobotSer)
+  {
+
+    // const moveit::core::JointModelGroup* joint_model_group =
+    //   RobotSer->move_group->getCurrentState()->getJointModelGroup(RobotSer->PLANNING_GROUP);
+
+    RobotSer->move_group->setPoseTarget(request->pose);
+
+    RCLCPP_INFO(LOGGER, "received pose: pos:(%.2f,%.2f,%.2f), orient:(%.2f,%.2f,%.2f,%.2f) ",
+      request->pose.position.x,request->pose.position.y,request->pose.position.z,
+      request->pose.orientation.x,request->pose.orientation.y,request->pose.orientation.z,request->pose.orientation.w);
+    // moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+
+    bool success = (RobotSer->move_group->plan(RobotSer->move_plan) == moveit::core::MoveItErrorCode::SUCCESS);
+    bool movesuccess = (RobotSer->move_group->execute(RobotSer->move_plan) == moveit::core::MoveItErrorCode::SUCCESS);
+
+    RCLCPP_INFO(LOGGER, "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    response->success=success;
+  }
+
+
+void plan_robot(const std::shared_ptr<mv2_com_interfaces::srv::MovePose::Request> request,
           std::shared_ptr<mv2_com_interfaces::srv::MovePose::Response>      response,std::shared_ptr<RobotServices> RobotSer)
   {
 
@@ -111,6 +131,9 @@ int main(int argc, char **argv)
   rclcpp::Service<mv2_com_interfaces::srv::MovePose>::SharedPtr plan_move_service_ =
      RS->create_service<mv2_com_interfaces::srv::MovePose>("plan_move_robot",
      std::bind(&plan_move_robot, std::placeholders::_1, std::placeholders::_2, RS));
+  rclcpp::Service<mv2_com_interfaces::srv::MovePose>::SharedPtr plan_service_ =
+     RS->create_service<mv2_com_interfaces::srv::MovePose>("plan_robot",
+     std::bind(&plan_robot, std::placeholders::_1, std::placeholders::_2, RS));
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr move_service_ =
     RS->create_service<std_srvs::srv::Trigger>("move_robot",
     std::bind(&move_robot, std::placeholders::_1, std::placeholders::_2, RS));
