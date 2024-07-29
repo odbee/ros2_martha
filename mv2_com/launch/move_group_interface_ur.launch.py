@@ -150,7 +150,9 @@ def launch_setup(context, *args, **kwargs):
             robot_description_semantic,
             robot_description_kinematics,
             {"planning_group": "ur_manipulator"},
-            {"base_frame": "base_link"}
+            {"base_frame": "base_link"},
+            {"tool_frame": "tool0"},
+
         ],
     )
 

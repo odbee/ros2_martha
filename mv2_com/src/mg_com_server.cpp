@@ -35,13 +35,18 @@ public:
     PLANNING_GROUP=this->get_parameter("planning_group").as_string();
 
     auto base_frame_desc = rcl_interfaces::msg::ParameterDescriptor{};
-    base_frame_desc.description = "Planning Group for move_group execution";
+    base_frame_desc.description = "Base Frame for move_group execution";
 
     this->declare_parameter("base_frame", "PLEASE_DECLARE_BASE_FRAME_IN_LAUNCH_FILE", base_frame_desc);
     
     BASE_FRAME=this->get_parameter("base_frame").as_string();
 
+    auto tool_frame_desc = rcl_interfaces::msg::ParameterDescriptor{};
+    base_frame_desc.description = "Tool Frame for move_group execution";
 
+    this->declare_parameter("tool_frame", "PLEASE_DECLARE_TOOL_FRAME_IN_LAUNCH_FILE", tool_frame_desc);
+    
+    TOOL_FRAME=this->get_parameter("tool_frame").as_string();
 
     planning_scene_interface=nullptr;
     move_group=nullptr;
@@ -53,6 +58,8 @@ public:
   const moveit::core::JointModelGroup* joint_model_group_ptr;
   std::string  PLANNING_GROUP;
   std::string  BASE_FRAME;
+  std::string  TOOL_FRAME;
+
   moveit::planning_interface::MoveGroupInterface::Plan move_plan;
 
 };
@@ -78,6 +85,41 @@ void plan_move_robot(const std::shared_ptr<mv2_com_interfaces::srv::MovePose::Re
     response->success=success;
   }
 
+void plan_move_robot_freeroll(const std::shared_ptr<mv2_com_interfaces::srv::MovePose::Request> request,
+          std::shared_ptr<mv2_com_interfaces::srv::MovePose::Response>      response,std::shared_ptr<RobotServices> RobotSer)
+  {
+    
+    // const moveit::core::JointModelGroup* joint_model_group =
+    //   RobotSer->move_group->getCurrentState()->getJointModelGroup(RobotSer->PLANNING_GROUP);
+
+    moveit_msgs::msg::OrientationConstraint ocm;
+    ocm.link_name = RobotSer->TOOL_FRAME;
+    ocm.header.frame_id = RobotSer->BASE_FRAME;
+    ocm.orientation.w = 1.0;
+    ocm.absolute_x_axis_tolerance = 3.14;
+    ocm.absolute_y_axis_tolerance = 2.1;
+    ocm.absolute_z_axis_tolerance = 2.1;
+    ocm.weight = 1.0;
+    moveit_msgs::msg::Constraints test_constraints;
+    test_constraints.orientation_constraints.push_back(ocm);
+    RobotSer->move_group->setPathConstraints(test_constraints);
+
+
+
+    RobotSer->move_group->setPoseTarget(request->pose);
+
+    
+    RCLCPP_INFO(LOGGER, "received pose: pos:(%.2f,%.2f,%.2f), orient:(%.2f,%.2f,%.2f,%.2f) ",
+      request->pose.position.x,request->pose.position.y,request->pose.position.z,
+      request->pose.orientation.x,request->pose.orientation.y,request->pose.orientation.z,request->pose.orientation.w);
+    // moveit::planning_interface::MoveGroupInterface::Plan my_plan;
+
+    bool success = (RobotSer->move_group->plan(RobotSer->move_plan) == moveit::core::MoveItErrorCode::SUCCESS);
+    bool movesuccess = (RobotSer->move_group->execute(RobotSer->move_plan) == moveit::core::MoveItErrorCode::SUCCESS);
+
+    RCLCPP_INFO(LOGGER, "Visualizing plan 1 (pose goal) %s", success ? "" : "FAILED");
+    response->success=success;
+  }
 
 void plan_robot(const std::shared_ptr<mv2_com_interfaces::srv::MovePose::Request> request,
           std::shared_ptr<mv2_com_interfaces::srv::MovePose::Response>      response,std::shared_ptr<RobotServices> RobotSer)
@@ -128,9 +170,12 @@ int main(int argc, char **argv)
   std::shared_ptr<RobotServices> RS =      std::make_shared<RobotServices>();
   rclcpp::executors::MultiThreadedExecutor executor;
   executor.add_node(move_group_node);
+  // rclcpp::Service<mv2_com_interfaces::srv::MovePose>::SharedPtr plan_move_service_ =
+  //    RS->create_service<mv2_com_interfaces::srv::MovePose>("plan_move_robot",
+  //    std::bind(&plan_move_robot, std::placeholders::_1, std::placeholders::_2, RS));
   rclcpp::Service<mv2_com_interfaces::srv::MovePose>::SharedPtr plan_move_service_ =
      RS->create_service<mv2_com_interfaces::srv::MovePose>("plan_move_robot",
-     std::bind(&plan_move_robot, std::placeholders::_1, std::placeholders::_2, RS));
+     std::bind(&plan_move_robot_freeroll, std::placeholders::_1, std::placeholders::_2, RS));
   rclcpp::Service<mv2_com_interfaces::srv::MovePose>::SharedPtr plan_service_ =
      RS->create_service<mv2_com_interfaces::srv::MovePose>("plan_robot",
      std::bind(&plan_robot, std::placeholders::_1, std::placeholders::_2, RS));
@@ -147,6 +192,8 @@ int main(int argc, char **argv)
   RCLCPP_INFO(LOGGER, "done spinning");
 
   RS->move_group=std::make_shared<moveit::planning_interface::MoveGroupInterface>(move_group_node, RS->PLANNING_GROUP);
+  RS->move_group->setPlannerId("RRTstarkConfigDefault");
+  RS->move_group->setGoalOrientationTolerance(3.14);
   executor.spin();
 
   moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
